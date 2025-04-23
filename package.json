@@ -8,9 +8,9 @@
     "build": "npm run prebuild && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:spesaList": "node dist/spesa-list/server/server.mjs",
+    "serve:ssr:spesaList": "node dist/spesa-list/server/main.js",
     "build:ssr": "npm run prebuild && ng build && ng run spesaList:server",
-    "serve:ssr": "node dist/spesaList/server/main.js",
+    "serve:ssr": "node dist/spesa-list/server/main.js",
     "start:all": "npm run build:ssr && npm run serve:ssr",
     "prerender": "npm run build:ssr && ng run spesaList:prerender"
   },

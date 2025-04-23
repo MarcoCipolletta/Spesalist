@@ -104,6 +104,28 @@
             "styles": ["src/styles.scss"],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/spesa-list/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputPath": "dist/spesa-list/server",
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true
+            },
+            "development": {
+              "outputPath": "dist/spesa-list/server",
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          }
         }
       }
     }
