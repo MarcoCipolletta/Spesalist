@@ -13,5 +13,5 @@ export enum unit {
   g = 'g',
   l = 'l',
   ml = 'ml',
-  unit = 'unit',
+  unit = 'unità',
 }

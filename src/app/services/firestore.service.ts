@@ -1,12 +1,14 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { collectionData, Firestore } from '@angular/fire/firestore';
+import { inject, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import {
   collection,
+  Firestore,
   addDoc,
   deleteDoc,
   doc,
   updateDoc,
-} from 'firebase/firestore';
+  collectionData,
+} from '@angular/fire/firestore';
+
 import { iItem } from '../interfaces/interfaces';
 import { Observable } from 'rxjs';
 
@@ -14,42 +16,37 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class FirestoreService {
-  constructor(
-    private firestore: Firestore,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  private firestore = inject(Firestore);
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   listenToItems() {
     const colRef = collection(this.firestore, 'items');
     return collectionData(colRef, { idField: 'id' }) as Observable<iItem[]>;
   }
 
-  addItem(item: Partial<iItem>) {
+  async addItem(item: Partial<iItem>): Promise<void> {
     try {
-      addDoc(collection(this.firestore, 'items'), item).then((docRef) => {
-        console.log('Document written with ID: ', docRef.id);
-      });
+      const docRef = await addDoc(collection(this.firestore, 'items'), item);
+      console.log('Document written with ID: ', docRef.id);
     } catch (e) {
       console.error('Error adding document: ', e);
     }
   }
 
-  deleteItem(id: string) {
+  async deleteItem(id: string): Promise<void> {
     try {
-      deleteDoc(doc(this.firestore, `items/${id}`)).then(() => {
-        console.log('Document successfully deleted!');
-      });
+      await deleteDoc(doc(this.firestore, `items/${id}`));
+      console.log('Document successfully deleted!');
     } catch (e) {
       console.error('Error removing document: ', e);
     }
   }
 
-  updateItem(item: iItem) {
-    item.checked = !item.checked;
+  async updateItem(item: iItem): Promise<void> {
     try {
-      updateDoc(doc(this.firestore, `items/${item.id}`), { ...item }).then(
-        () => {}
-      );
+      const updatedItem = { ...item, checked: !item.checked };
+      await updateDoc(doc(this.firestore, `items/${item.id}`), updatedItem);
+      console.log('Document successfully updated!');
     } catch (e) {
       console.error('Error updating document: ', e);
     }

@@ -19,4 +19,11 @@ export class AppComponent {
       this.itemsChecked = docs.filter((item) => item.checked);
     });
   }
+
+  change(item: iItem) {
+    this.firestoreSvc.updateItem(item);
+  }
+  delete(id: string) {
+    this.firestoreSvc.deleteItem(id);
+  }
 }
