@@ -3,7 +3,10 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc/server",
     "target": "ES2022",
-    "types": ["node"]
+    "types": [
+      "node",
+      "@angular/localize"
+    ]
   },
   "files": ["server.ts"],
   "angularCompilerOptions": {

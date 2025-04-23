@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FirestoreService } from './services/firestore.service';
+import { iItem } from './interfaces/interfaces';
+import { doc } from 'firebase/firestore';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +10,13 @@ import { FirestoreService } from './services/firestore.service';
   standalone: false,
 })
 export class AppComponent {
-  constructor(private firestoreService: FirestoreService) {}
-  title = 'spesaList';
+  constructor(private firestoreSvc: FirestoreService) {}
+  itemsToCheck: iItem[] = [];
+  itemsChecked: iItem[] = [];
   ngOnInit() {
-    // this.firestoreService.addItem({});
+    this.firestoreSvc.listenToItems().subscribe((docs) => {
+      this.itemsToCheck = docs.filter((item) => !item.checked);
+      this.itemsChecked = docs.filter((item) => item.checked);
+    });
   }
 }
